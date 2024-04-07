@@ -40,6 +40,7 @@ def scan_url(request):
           
             browser.close()
 
+        # Extracting Information to save it in JSON Format in Database
         extracted_information = {
             'url': url,
             'screenshot': screenshot_path,
@@ -51,6 +52,8 @@ def scan_url(request):
             'page_source': page_source,
             'natural_language_content': natural_language_content,
         }
+
+        # Saving to Database
         scan_result = ScanResult.objects.create(
             url=url,
             screenshot=screenshot_path,
@@ -61,7 +64,7 @@ def scan_url(request):
             ssl_certificate_details=ssl_certificate_details,
             page_source=page_source,
             natural_language_content=natural_language_content,
-            extracted_information=extracted_information,    
+            extracted_information=extracted_information,     # extracted_information will be saved in JSON Format in Database
         )
         return JsonResponse({'status': 'success', 'scan_id': scan_result.id})
     else:
